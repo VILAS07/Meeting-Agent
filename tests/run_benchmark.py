@@ -8,7 +8,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from agent.extractor import extract_items
 from agent.prioritizer import prioritize_items
 from agent.formatter import format_report
-from tests.scorer import score_agent, compare_with_plain_llm
+from scorer import score_agent, compare_with_plain_llm
 
 TRANSCRIPTS = [
     {"file": "transcript_startup.txt", "expected_items": 6, "expected_owners": 3},

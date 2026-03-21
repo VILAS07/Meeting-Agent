@@ -23,15 +23,13 @@ def extract_items(transcript: str) -> dict:
     
     # Call the LLM
     print("Extracting items from transcript...")
-    response_text = call_llm(prompt)
+    response_text = call_llm(prompt, model='stepfun/step-3.5-flash:free')
     
-    # Clean response block if it's wrapped in Markdown code blocks
-    if response_text.startswith("```json"):
-        response_text = response_text[7:]
-    if response_text.startswith("```"):
-        response_text = response_text[3:]
-    if response_text.endswith("```"):
-        response_text = response_text[:-3]
+    # Extract JSON object safely
+    start_idx = response_text.find('{')
+    end_idx = response_text.rfind('}')
+    if start_idx != -1 and end_idx != -1 and start_idx < end_idx:
+        response_text = response_text[start_idx:end_idx+1]
         
     response_text = response_text.strip()
     
