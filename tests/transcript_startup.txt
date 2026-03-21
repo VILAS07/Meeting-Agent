@@ -1,0 +1,12 @@
+Alex: Alright, let's go. We have 15 minutes. First, user authentication bug. Who is taking that?
+Jamie: I will. I'll push a hotfix by tonight.
+Alex: Need that by 5 PM. Also, the new landing page copy needs review. Taylor?
+Taylor: I'll review and send to marketing by tomorrow morning.
+Alex: And we need someone to contact Stripe support about the webhook failures.
+Morgan: I can do that after the standup. I'll get an update by EOD.
+Alex: Good. Also please remember to update the README for the new endpoints.
+Jamie: On it, I'll update the README by tomorrow.
+Alex: And one more thing, we need to schedule the AWS migration. Taylor, please set up a meeting with Devops for this Friday.
+Taylor: Sure, I'll send the calendar invite today.
+Alex: Lastly, check the error logs for the frontend. Morgan, can you look into those timeouts?
+Morgan: Yes, I'll review the logs tomorrow.

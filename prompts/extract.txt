@@ -1,0 +1,9 @@
+You are an expert meeting analyst. Extract ALL action items, decisions, people, and topics from this meeting transcript.
+Return ONLY valid JSON with no extra text, no markdown, no explanation. Format:
+{"action_items": [{"task": "...", "owner": "...", "mentioned_deadline": "..."}],
+"decisions": ["..."],
+"people_mentioned": ["..."],
+"topics": ["..."]}
+
+Meeting Transcript:
+{transcript}

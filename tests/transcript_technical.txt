@@ -1,0 +1,12 @@
+Casey: So the main purpose today is to decide on the database architecture for the new microservice. Are we going with Postgres or MongoDB?
+Jordan: Given the highly relational nature of the user data, Postgres is definitely the better choice. We can handle JSON fields inside it easily if needed.
+Casey: I agree. Let's officially decide on Postgres. Jordan, please write up the formal architectural decision record (ADR) by Wednesday.
+Jordan: Will do. I'll also start provisioning the RDS instances.
+Casey: Great. We also need to set up the CI/CD pipeline. Alex, are you taking that?
+Alex: Yes, I'll create the GitHub Actions workflow. I should have it running by Friday.
+Casey: Perfect. In the meantime, we need the API schema finalized. Sam, you've been working with the frontend team.
+Sam: Yes, I will finalize the GraphQL schema with them and document it by Thursday.
+Casey: Awesome. And remember we need load testing before launch. Jordan, please configure the load testing script.
+Jordan: I'll get the load tests ready by next week Monday.
+Casey: Lastly, make sure all services have Datadog tracing enabled. Alex, please ensure the agent is running on all instances.
+Alex: I'll add that to the infrastructure as code tomorrow.

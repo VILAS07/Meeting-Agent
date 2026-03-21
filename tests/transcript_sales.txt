@@ -1,0 +1,18 @@
+Chris: Thanks everyone for joining the Q2 sales debrief. We missed our quota by 5%. We need a plan to recover.
+Dana: The major issue was lead quality. Our enterprise leads were not qualified.
+Chris: Okay, so we need to refine the qualification criteria. Sam, can you work with marketing to update the lead scoring matrix?
+Sam: Yes, I'll have a new matrix drafted by Wednesday next week.
+Chris: Excellent. Also, we lost the Acme Corp deal. Riley, I need a post-mortem on that. Why did they go with the competitor?
+Riley: Pricing and missing integration features. I'll compile a full report by Friday so we can analyze it.
+Chris: We also need to offer a promotion for Q3 to boost early numbers. Dana, please design a Q3 discount campaign.
+Dana: I'll have the campaign proposal ready by next Monday.
+Chris: Good. Make sure the sales team is fully trained on the new enterprise pitch deck. Sam, please schedule a training session for the team.
+Sam: Will do, I'll schedule it for next Thursday.
+Chris: I also need the updated revenue projections. Riley, please send those to me.
+Riley: I'll send the projections EOD tomorrow.
+Chris: Also, we need to renegotiate our contract with the data provider. Dana, please handle the initial outreach.
+Dana: I will email them today.
+Chris: Sam, remember to update the CRM with the new stages we discussed.
+Sam: On it, will be done by Friday.
+Chris: Riley, follow up with the TechCorp VP regarding their renewal.
+Riley: Yes, calling them tomorrow morning.

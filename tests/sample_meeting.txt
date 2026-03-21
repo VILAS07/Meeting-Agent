@@ -1,0 +1,17 @@
+Sarah: Alright team, let's get started on the Q3 Product Launch meeting. We have a lot to cover. First, the new analytics dashboard. Marcus, where are we on that?
+Marcus: The backend APIs are done, but the frontend needs some polish. I'll need until Friday to wrap up the UI components.
+Sarah: Okay, so Marcus will finish the dashboard UI by Friday. Next, the marketing site update. Elena, what's the status?
+Elena: We have the copy ready, but we are still waiting on the final hero images from design. I think David is working on those.
+David: Yes, I've had some delays but I'll get those hero images to Elena by Wednesday. 
+Elena: Great, once I have them, I can deploy the site update by next Monday.
+Sarah: Perfect. So David supplies images by Wednesday, Elena deploys by Monday. Are we still doing the press release on Tuesday?
+Marcus: Actually, the PR firm suggested we wait until Thursday to avoid clashing with the Apple event. I think it's a good call.
+Sarah: Agreed. Let's push the press release to Thursday. Marcus, can you let the PR firm know about the delay today?
+Marcus: Will do.
+Sarah: We also need someone to write up the release notes for the app stores. Any volunteers?
+David: I can do that. I've been tracking all the new features anyway. I'll have a draft ready by Friday.
+Sarah: Thanks David. Also, we need to decide on the pricing tier names. I saw the proposals. I think we should go with Basic, Pro, and Enterprise rather than the thematic names.
+Elena: I agree, it's clearer for the users. 
+Sarah: Okay, decision made: we'll use Basic, Pro, and Enterprise for the tiers. Elena, please update the pricing page copy to reflect this by Thursday.
+Elena: Got it.
+Sarah: That covers everything. Thanks everyone!

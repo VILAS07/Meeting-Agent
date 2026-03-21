@@ -1,0 +1,8 @@
+- This is a Python AI agent project using OpenRouter API
+- All LLM calls go through agent/llm.py — never call API directly elsewhere
+- Never hardcode API keys — always use .env
+- All prompts are stored as .txt files in prompts/ folder — never inline long prompts
+- Use type hints in all Python functions
+- Every function must have a docstring
+- Keep functions small — max 30 lines per function
+- Output must always be valid JSON when processing meeting data
