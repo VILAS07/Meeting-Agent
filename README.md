@@ -32,6 +32,7 @@ Instead of a plain summary, you get a ranked execution plan — with owners, dea
 ---
 
 ## ⚙️ How It Works
+
 Raw Transcript → [EXTRACT] → [PRIORITIZE] → [FORMAT] → Action Plan
 
 The pipeline has 3 dedicated LLM steps, each with its own focused prompt:
@@ -41,6 +42,7 @@ A targeted LLM call pulls every action item, decision, person, and topic from th
 
 ### Step 2 — Prioritize
 Each task is scored using the formula:
+
 Priority Score = (Impact × 10) − (Effort × 3)
 
 - **Impact** = Business value if completed (1–10)
@@ -55,14 +57,17 @@ The ranked data is compiled into a clean Markdown report and a JSON artifact —
 ## 📄 Sample Output
 
 Running on `tests/sample_meeting.txt` produces:
+
+```
 MEETING ACTION PLAN
+
 MEETING SUMMARY
 The meeting covered Q3 Product Launch, analytics dashboard, marketing site,
 press release timing, and pricing tiers. Key participants: Sarah, Marcus, Elena, David.
-KEY DECISIONS
 
-Press release pushed to Thursday to avoid Apple event clash
-Pricing tiers named Basic, Pro, and Enterprise
+KEY DECISIONS
+- Press release pushed to Thursday to avoid Apple event clash
+- Pricing tiers named Basic, Pro, and Enterprise
 
 TOP PRIORITY
 🚨 TOP PRIORITY: Notify PR firm about press release delay (Owner: Marcus)
@@ -70,11 +75,20 @@ TOP PRIORITY
 Reason: Same-day deadline — must be done today (Impact: 8/10, Effort: 1/10)
 
 ACTION ITEMS
-#TaskOwnerDeadlinePriority ScoreReason1Notify PR firm about delayMarcusToday77Urgent, low effort2Supply hero images to ElenaDavidWednesday67Blocks site deploy3Finish dashboard UIMarcusFriday64Core launch blocker4Deploy marketing site updateElenaMonday58Depends on images5Write app store release notesDavidFriday52Launch requirement6Update pricing page copyElenaThursday49Decision just made
+
+# | Task | Owner | Deadline | Priority Score | Reason
+1 | Notify PR firm about delay | Marcus | Today | 77 | Urgent, low effort
+2 | Supply hero images to Elena | David | Wednesday | 67 | Blocks site deploy
+3 | Finish dashboard UI | Marcus | Friday | 64 | Core launch blocker
+4 | Deploy marketing site update | Elena | Monday | 58 | Depends on images
+5 | Write app store release notes | David | Friday | 52 | Launch requirement
+6 | Update pricing page copy | Elena | Thursday | 49 | Decision just made
+```
 
 ---
 
 ## 🚀 Quick Start
+
 ```bash
 # 1. Clone the repo
 git clone https://github.com/VILAS07/Meeting-Agent.git
@@ -110,7 +124,8 @@ The agent is evaluated on a 1–10,000 scale across 5 metrics:
 | Output Clarity | 1500 | Is the report clean and structured? |
 | **Total** | **10,000** | |
 
-Run the benchmark yourself to generate real scores:
+Run the benchmark yourself:
+
 ```bash
 python tests/run_benchmark.py
 ```
@@ -123,99 +138,100 @@ Results are saved to `outputs/benchmark_results.json`.
 
 Same transcript. Same model. Different approach.
 
-The pipeline is benchmarked against a plain single-prompt LLM call on the same input. Run it yourself:
+Run:
+
 ```bash
 python tests/run_benchmark.py
 ```
 
 **Why the pipeline wins:**
-A plain LLM call returns conversational output — readable, but unstructured. No priority scores. No consistent JSON. No guaranteed owner assignment. The pipeline forces structured reasoning at every step, making the output reliable and actionable every single time.
+
+A plain LLM call returns conversational output — readable, but unstructured.  
+No priority scores. No consistent JSON. No guaranteed owner assignment.  
+
+The pipeline forces structured reasoning at every step.
 
 ---
 
 ## 📁 Project Structure
+
+```
 Meeting-Agent/
 ├── agent/
-│   ├── llm.py            # All LLM calls go through here (OpenRouter)
-│   ├── extractor.py      # Step 1 — Extract action items from transcript
-│   ├── prioritizer.py    # Step 2 — Score and rank by impact/effort
-│   └── formatter.py      # Step 3 — Generate Markdown + JSON report
+│   ├── llm.py
+│   ├── extractor.py
+│   ├── prioritizer.py
+│   └── formatter.py
 ├── prompts/
-│   ├── extract.txt       # Extraction prompt template
-│   └── prioritize.txt    # Prioritization prompt template
+│   ├── extract.txt
+│   └── prioritize.txt
 ├── tests/
-│   ├── sample_meeting.txt         # Demo transcript
-│   ├── transcript_startup.txt     # Benchmark transcript 1
-│   ├── transcript_sales.txt       # Benchmark transcript 2
-│   ├── transcript_technical.txt   # Benchmark transcript 3
-│   ├── scorer.py                  # 1–10,000 scoring system
-│   └── run_benchmark.py           # Agent vs Plain LLM comparison
-├── outputs/              # Generated reports (gitignored)
-├── main.py               # Entry point — runs full pipeline
-├── .cursorrules          # Cursor AI configuration
-├── .env.example          # API key template
+│   ├── sample_meeting.txt
+│   ├── transcript_startup.txt
+│   ├── transcript_sales.txt
+│   ├── transcript_technical.txt
+│   ├── scorer.py
+│   └── run_benchmark.py
+├── outputs/
+├── main.py
+├── .cursorrules
+├── .env.example
 ├── requirements.txt
 └── README.md
+```
 
 ---
 
 ## 🔧 Free Models Used (OpenRouter)
 
-| Step | Model | Why |
-|---|---|---|
-| Extract | `stepfun/step-3.5-flash:free` | Fast, accurate at structured extraction |
-| Prioritize | `stepfun/step-3.5-flash:free` | Reliable reasoning for scoring |
-| Fallback 1 | `google/gemma-2-9b-it:free` | Automatic fallback if primary fails |
-| Fallback 2 | `microsoft/phi-3-mini-128k-instruct:free` | Final fallback model |
-
-No paid API required. All models are free tier on OpenRouter.
+| Step | Model |
+|---|---|
+| Extract | stepfun/step-3.5-flash:free |
+| Prioritize | stepfun/step-3.5-flash:free |
+| Fallback 1 | google/gemma-2-9b-it:free |
+| Fallback 2 | microsoft/phi-3-mini-128k-instruct:free |
 
 ---
 
 ## 🖥️ Cursor Setup
 
-The `.cursorrules` file configures Cursor AI to follow the project's architecture:
-
-- All LLM calls go through `agent/llm.py` — never called directly elsewhere
-- API keys always loaded from `.env` — never hardcoded
-- All prompts stored as `.txt` files in `prompts/` — never inlined
-- Every function uses type hints and docstrings
-- Functions kept under 30 lines for readability
-- Output always returns valid JSON when processing meeting data
-
-Open this project in Cursor and the AI assistant will automatically follow these rules.
+- All LLM calls → `agent/llm.py`
+- API keys → `.env`
+- Prompts → `prompts/*.txt`
+- Functions → type hints + docstrings
+- Output → always valid JSON
 
 ---
 
 ## 🧠 Design Decisions
 
-**Why a 3-step pipeline instead of one prompt?**
-Splitting extraction from prioritization eliminates a core LLM failure mode — when you ask a single prompt to extract AND rank simultaneously, it hallucinates rankings or misses items. Separating the steps forces focused, verifiable reasoning at each stage.
+**Why 3-step pipeline?**  
+Prevents hallucination and improves accuracy.
 
-**Why free models?**
-To prove that architecture matters more than expensive models. Intelligence comes from prompt design and pipeline structure — not from throwing GPT-4 at every problem.
+**Why free models?**  
+Shows architecture > expensive models.
 
-**Why this scoring formula?**
-`Priority = (Impact × 10) − (Effort × 3)` mirrors how real engineering and product teams actually make prioritization decisions. High impact, low effort tasks always rise to the top. Same-day deadlines override the formula — urgency trumps optimization.
+**Why this formula?**  
+Real-world prioritization logic.
 
-**Why store prompts as `.txt` files?**
-Keeping prompts outside code makes them easy to test, swap, and improve without touching the pipeline logic. It also forces clean separation between the AI layer and the application layer.
+**Why `.txt` prompts?**  
+Easy to edit without touching code.
 
 ---
 
 ## ⚠️ Known Limitations
 
-| Limitation | Detail | Fix |
-|---|---|---|
-| Speed | ~90s on free tier due to OpenRouter queue limits | Zero code changes needed — sub-10s on paid tier |
-| Consistency | Priority ranking can vary slightly between runs | Addressed with deterministic deadline rules in prompt |
-| Language | Optimized for English transcripts | Prompt templates can be translated for other languages |
+| Limitation | Detail |
+|---|---|
+| Speed | ~90s (free tier) |
+| Consistency | Slight variation |
+| Language | English optimized |
 
 ---
 
 ## 📬 Contact
 
-Built by [Vilas](https://github.com/VILAS07) as part of the MUST Company FDE/APO Quest.
+Built by [Vilas](https://github.com/VILAS07)
 
 ---
 
