@@ -2,11 +2,17 @@
 
 > **An AI pipeline that transforms raw meeting transcripts into structured, prioritized action plans — using free LLMs via OpenRouter.**
 
-![Score](https://img.shields.io/badge/Agent%20Score-10%2C000%20%2F%2010%2C000-brightgreen)
-![Improvement](https://img.shields.io/badge/vs%20Plain%20LLM-%2B166.7%25-blue)
 ![Models](https://img.shields.io/badge/Models-Free%20OpenRouter-orange)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-yellow)
 ![Cursor](https://img.shields.io/badge/Cursor-Ready-purple)
+
+---
+
+## 💡 Why This Problem Was #1 Priority
+
+Meeting action items are the most universally lost data in any team — regardless of size, industry, or toolstack. Every company has this problem. The solution is measurable, immediately useful, and directly demonstrates **Priority Definition Ability**: knowing what matters, extracting it, ranking it, and delivering it in a format that drives execution.
+
+This is not a tool for documenting meetings. It is a tool for eliminating the gap between decision and action.
 
 ---
 
@@ -26,10 +32,7 @@ Instead of a plain summary, you get a ranked execution plan — with owners, dea
 ---
 
 ## ⚙️ How It Works
-
-```
 Raw Transcript → [EXTRACT] → [PRIORITIZE] → [FORMAT] → Action Plan
-```
 
 The pipeline has 3 dedicated LLM steps, each with its own focused prompt:
 
@@ -38,10 +41,7 @@ A targeted LLM call pulls every action item, decision, person, and topic from th
 
 ### Step 2 — Prioritize
 Each task is scored using the formula:
-
-```
 Priority Score = (Impact × 10) − (Effort × 3)
-```
 
 - **Impact** = Business value if completed (1–10)
 - **Effort** = Time and resources required (1–10)
@@ -52,37 +52,29 @@ The ranked data is compiled into a clean Markdown report and a JSON artifact —
 
 ---
 
-## 📊 Performance Score: 10,000 / 10,000
+## 📄 Sample Output
 
-| Metric | Score | Explanation |
-|---|---|---|
-| Extraction Accuracy | 2500 / 2500 | Captures all critical action items without missing any |
-| Priority Correctness | 2500 / 2500 | Uses intelligent impact/effort heuristics consistently |
-| Owner Detection | 2000 / 2000 | Successfully identifies and assigns task owners |
-| Deadline Quality | 1500 / 1500 | Correctly infers deadlines from conversational context |
-| Output Clarity | 1500 / 1500 | Clean, scannable Markdown report with full reasoning |
-| **Total** | **10,000 / 10,000** | |
+Running on `tests/sample_meeting.txt` produces:
+MEETING ACTION PLAN
+MEETING SUMMARY
+The meeting covered Q3 Product Launch, analytics dashboard, marketing site,
+press release timing, and pricing tiers. Key participants: Sarah, Marcus, Elena, David.
+KEY DECISIONS
 
----
+Press release pushed to Thursday to avoid Apple event clash
+Pricing tiers named Basic, Pro, and Enterprise
 
-## 🏆 Benchmark: Agent vs Plain LLM
+TOP PRIORITY
+🚨 TOP PRIORITY: Notify PR firm about press release delay (Owner: Marcus)
 
-Same transcript. Same model. Different approach.
+Reason: Same-day deadline — must be done today (Impact: 8/10, Effort: 1/10)
 
-| Transcript | Agent Score | Plain LLM Score | Improvement |
-|---|---|---|---|
-| Startup standup | 10,000 | 3,750 | **+166.7%** |
-| Sales debrief | 10,000 | 3,750 | **+166.7%** |
-| Technical architecture | 10,000 | 3,750 | **+166.7%** |
-
-**Why such a big difference?**
-
-A plain LLM call returns conversational output — readable, but unstructured. No priority scores. No consistent JSON. No guaranteed owner assignment. The pipeline forces structured reasoning at every step, making the output reliable and actionable every single time.
+ACTION ITEMS
+#TaskOwnerDeadlinePriority ScoreReason1Notify PR firm about delayMarcusToday77Urgent, low effort2Supply hero images to ElenaDavidWednesday67Blocks site deploy3Finish dashboard UIMarcusFriday64Core launch blocker4Deploy marketing site updateElenaMonday58Depends on images5Write app store release notesDavidFriday52Launch requirement6Update pricing page copyElenaThursday49Decision just made
 
 ---
 
 ## 🚀 Quick Start
-
 ```bash
 # 1. Clone the repo
 git clone https://github.com/VILAS07/Meeting-Agent.git
@@ -92,8 +84,9 @@ cd Meeting-Agent
 pip install -r requirements.txt
 
 # 3. Add your OpenRouter API key
-cp .env.example .env
-# Edit .env → OPENROUTER_API_KEY=your_key_here
+# Get a free key at https://openrouter.ai → Keys → Create
+copy .env.example .env
+# Open .env and set: OPENROUTER_API_KEY=your_key_here
 
 # 4. Run on a sample transcript
 python main.py --input tests/sample_meeting.txt
@@ -104,9 +97,43 @@ python main.py --text "Sarah will handle the deployment by Friday. Marcus needs 
 
 ---
 
-## 📁 Project Structure
+## 📊 Performance Scoring
 
+The agent is evaluated on a 1–10,000 scale across 5 metrics:
+
+| Metric | Max Score | What It Measures |
+|---|---|---|
+| Extraction Accuracy | 2500 | Are all action items captured? |
+| Priority Correctness | 2500 | Are impact/effort scores consistent? |
+| Owner Detection | 2000 | Are task owners correctly identified? |
+| Deadline Quality | 1500 | Are deadlines inferred correctly? |
+| Output Clarity | 1500 | Is the report clean and structured? |
+| **Total** | **10,000** | |
+
+Run the benchmark yourself to generate real scores:
+```bash
+python tests/run_benchmark.py
 ```
+
+Results are saved to `outputs/benchmark_results.json`.
+
+---
+
+## 🏆 Benchmark: Agent vs Plain LLM
+
+Same transcript. Same model. Different approach.
+
+The pipeline is benchmarked against a plain single-prompt LLM call on the same input. Run it yourself:
+```bash
+python tests/run_benchmark.py
+```
+
+**Why the pipeline wins:**
+A plain LLM call returns conversational output — readable, but unstructured. No priority scores. No consistent JSON. No guaranteed owner assignment. The pipeline forces structured reasoning at every step, making the output reliable and actionable every single time.
+
+---
+
+## 📁 Project Structure
 Meeting-Agent/
 ├── agent/
 │   ├── llm.py            # All LLM calls go through here (OpenRouter)
@@ -115,8 +142,7 @@ Meeting-Agent/
 │   └── formatter.py      # Step 3 — Generate Markdown + JSON report
 ├── prompts/
 │   ├── extract.txt       # Extraction prompt template
-│   ├── prioritize.txt    # Prioritization prompt template
-│   └── format.txt        # Formatting prompt template
+│   └── prioritize.txt    # Prioritization prompt template
 ├── tests/
 │   ├── sample_meeting.txt         # Demo transcript
 │   ├── transcript_startup.txt     # Benchmark transcript 1
@@ -130,7 +156,6 @@ Meeting-Agent/
 ├── .env.example          # API key template
 ├── requirements.txt
 └── README.md
-```
 
 ---
 
@@ -138,9 +163,10 @@ Meeting-Agent/
 
 | Step | Model | Why |
 |---|---|---|
-| Extract | `meta-llama/llama-3.1-8b-instruct:free` | Fast, accurate at structured extraction |
-| Prioritize | `mistralai/mistral-7b-instruct:free` | Reliable reasoning for scoring |
-| Format | `google/gemma-3-12b-it:free` | Clean, readable output generation |
+| Extract | `stepfun/step-3.5-flash:free` | Fast, accurate at structured extraction |
+| Prioritize | `stepfun/step-3.5-flash:free` | Reliable reasoning for scoring |
+| Fallback 1 | `google/gemma-2-9b-it:free` | Automatic fallback if primary fails |
+| Fallback 2 | `microsoft/phi-3-mini-128k-instruct:free` | Final fallback model |
 
 No paid API required. All models are free tier on OpenRouter.
 
@@ -167,12 +193,12 @@ Open this project in Cursor and the AI assistant will automatically follow these
 Splitting extraction from prioritization eliminates a core LLM failure mode — when you ask a single prompt to extract AND rank simultaneously, it hallucinates rankings or misses items. Separating the steps forces focused, verifiable reasoning at each stage.
 
 **Why free models?**
-To prove that architecture matters more than expensive models. Intelligence comes from prompt design and pipeline structure — not from throwing GPT-4 at every problem. The +166.7% improvement over plain LLM is achieved with the exact same free model.
+To prove that architecture matters more than expensive models. Intelligence comes from prompt design and pipeline structure — not from throwing GPT-4 at every problem.
 
 **Why this scoring formula?**
 `Priority = (Impact × 10) − (Effort × 3)` mirrors how real engineering and product teams actually make prioritization decisions. High impact, low effort tasks always rise to the top. Same-day deadlines override the formula — urgency trumps optimization.
 
-**Why store prompts as .txt files?**
+**Why store prompts as `.txt` files?**
 Keeping prompts outside code makes them easy to test, swap, and improve without touching the pipeline logic. It also forces clean separation between the AI layer and the application layer.
 
 ---
@@ -184,14 +210,6 @@ Keeping prompts outside code makes them easy to test, swap, and improve without 
 | Speed | ~90s on free tier due to OpenRouter queue limits | Zero code changes needed — sub-10s on paid tier |
 | Consistency | Priority ranking can vary slightly between runs | Addressed with deterministic deadline rules in prompt |
 | Language | Optimized for English transcripts | Prompt templates can be translated for other languages |
-
----
-
-## 💡 Why This Problem Was #1 Priority
-
-Meeting action items are the most universally lost data in any team — regardless of size, industry, or toolstack. Every company has this problem. The solution is measurable, immediately useful, and directly demonstrates **Priority Definition Ability**: knowing what matters, extracting it, ranking it, and delivering it in a format that drives execution.
-
-This is not a tool for documenting meetings. It is a tool for eliminating the gap between decision and action.
 
 ---
 
